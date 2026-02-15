@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 // Import components
-import Header from "./components/Header";
-import HomePage from "./components/HomePage";
-import CartPage from "./components/CartPage";
-import ContactPage from "./components/ContactPage";
-import PaymentPage from "./components/PaymentPage";
-import WishlistPage from "./components/WishlistPage"; // Import WishlistPage
+import Header from "./components/Header.js";
+import HomePage from "./components/HomePage.js";
+import CartPage from "./components/CartPage.js";
+import ContactPage from "./components/ContactPage.js";
+import PaymentPage from "./components/PaymentPage.js";
+import WishlistPage from "./components/WishlistPage.js"; // Import WishlistPage
 
 // Import utilities
 import {
@@ -15,47 +15,51 @@ import {
   getTotalPrice,
   calculateShippingCost,
   calculateTotalPrice,
-} from "./utils/cartUtils";
+} from "./utils/cartUtils.js";
+
+// Import products data
+import shoeData from "./utils/shoeData.js";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState("home");
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]); // Add wishlist state
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState(shoeData);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch from MongoDB API
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("http://localhost:5000/api/products", {
-        headers: {
-          "Cache-Control": "no-cache",
-          Pragma: "no-cache",
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-      setProducts(data);
-      setError(null);
-    } catch (err) {
-      console.error("Error loading products:", err);
-      setError(
-        "Failed to load products. Please make sure the server is running.",
-      );
-      setProducts([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // // Fetch from MongoDB API (COMMENTED OUT)
+  // const fetchProducts = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await fetch("http://localhost:5000/api/products", {
+  //       headers: {
+  //         "Cache-Control": "no-cache",
+  //         Pragma: "no-cache",
+  //       },
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! Status: ${response.status}`);
+  //     }
+  //     const data = await response.json();
+  //     setProducts(data);
+  //     setError(null);
+  //   } catch (err) {
+  //     console.error("Error loading products:", err);
+  //     // Use shoe data as fallback
+  //     setProducts(shoeData);
+  //     setError("Using local product data. Server is not available.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, []);
+
+  const fetchProducts = () => {}; // Dummy function for refresh button
 
   const addToCart = (product) => {
     const existingItem = cart.find((item) => item._id === product._id);
@@ -140,8 +144,8 @@ const App = () => {
           addToWishlist={addToWishlist}
           wishlist={wishlist}
           removeFromWishlist={removeFromWishlist}
-          loading={loading}
-          error={error}
+          loading={false}
+          error={null}
           onRefresh={fetchProducts}
         />
       )}

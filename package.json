@@ -1,6 +1,7 @@
 {
   "name": "ecommerce-shoe-store",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
     "autoprefixer": "^10.4.0",
@@ -27,7 +28,7 @@
     "build": "node node_modules/react-scripts/bin/react-scripts.js build",
     "start": "react-scripts start",
     "server": "node server.js",
-    "dev": "concurrently \"npm run server\" \"npm run start\""
+    "dev": "concurrently \"npm run server\" \"cross-env PORT=3000 npm start\""
   },
   "browserslist": {
     "production": [
@@ -45,6 +46,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^4.17.25",
     "@types/node": "^25.2.3",
+    "cross-env": "^10.1.0",
     "process": "^0.11.10"
   }
 }
