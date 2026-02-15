@@ -24,7 +24,7 @@
     "vm-browserify": "^1.1.2"
   },
   "scripts": {
-    "build": "react-scripts build",
+    "build": "node node_modules/react-scripts/bin/react-scripts.js build",
     "start": "react-scripts start",
     "server": "node server.js",
     "dev": "concurrently \"npm run server\" \"npm run start\""
